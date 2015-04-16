@@ -56,12 +56,14 @@ public class MainActivity extends ActionBarActivity {
                 .build();
 
         NotificationCompat.Builder builder = new NotificationCompat.Builder(MainActivity.this);
+        NotificationCompat.WearableExtender wearNotificationExtras = new NotificationCompat.WearableExtender().addAction(mapAction).addAction(replyAction);
+
         return builder
                 .setContentTitle("Hello Droidcon")
                 .setContentText("TEST")
                 .setSmallIcon(R.mipmap.ic_launcher)
-//                                .addAction(mapAction)
-                .extend(new NotificationCompat.WearableExtender().addAction(mapAction).addAction(replyAction))
+                .addAction(mapAction)
+                .extend(wearNotificationExtras)
                 .build();
     }
 
