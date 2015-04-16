@@ -33,9 +33,9 @@ public class MainActivity extends ActionBarActivity {
     }
 
     private void showNotification() {
-        Intent intent = new Intent(Intent.ACTION_VIEW);
-        intent.setData(Uri.parse("geo:24,54?q=dubai"));
-        PendingIntent pendingIntent = PendingIntent.getActivity(MainActivity.this, 123, intent, 0);
+        Intent mapIntent = new Intent(Intent.ACTION_VIEW);
+        mapIntent.setData(Uri.parse("geo:24,54?q=dubai"));
+        PendingIntent pendingMapIntent = PendingIntent.getActivity(MainActivity.this, 123, mapIntent, 0);
 
         RemoteInput remoteInput = new RemoteInput.Builder(KEY_REPLY)
                 .setLabel("Voice reply?")
@@ -43,17 +43,17 @@ public class MainActivity extends ActionBarActivity {
                 .build();
         Intent replyIntent = new Intent(MainActivity.this, MainActivity.class);
         PendingIntent pendingReplyIntent = PendingIntent.getActivity(MainActivity.this, 321, replyIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+        NotificationCompat.Action replyAction = new NotificationCompat.Action.Builder(R.mipmap.ic_launcher, "Reply", pendingReplyIntent).build();
 
-
-        NotificationCompat.Action action = new NotificationCompat.Action.Builder(R.mipmap.ic_launcher, "MAP", pendingIntent).build();
+        NotificationCompat.Action mapAction = new NotificationCompat.Action.Builder(R.mipmap.ic_launcher, "Map", pendingMapIntent).build();
 
         NotificationCompat.Builder builder = new NotificationCompat.Builder(MainActivity.this);
         Notification notification = builder
                 .setContentTitle("Hello Droidcon")
                 .setContentText("TEST")
                 .setSmallIcon(R.mipmap.ic_launcher)
-//                                .addAction(action)
-                .extend(new NotificationCompat.WearableExtender().addAction(action))
+//                                .addAction(mapAction)
+                .extend(new NotificationCompat.WearableExtender().addAction(mapAction).addAction(replyAction))
                 .build();
         NotificationManagerCompat notificationManger = NotificationManagerCompat.from(MainActivity.this);
         notificationManger.notify(0, notification);
