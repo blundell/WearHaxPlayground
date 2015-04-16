@@ -12,6 +12,7 @@ import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Toast;
 
 public class MainActivity extends ActionBarActivity {
 
@@ -31,6 +32,11 @@ public class MainActivity extends ActionBarActivity {
                     }
                 });
 
+        Bundle remoteInput = RemoteInput.getResultsFromIntent(getIntent());
+        if (remoteInput != null) {
+            CharSequence reply = remoteInput.getCharSequence(KEY_REPLY);
+            Toast.makeText(this, reply, Toast.LENGTH_LONG).show();
+        }
     }
 
     private Notification buildNotification() {
