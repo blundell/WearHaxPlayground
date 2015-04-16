@@ -3,5 +3,6 @@
   <string name="title_activity_main">MainActivity</string>
   <string name="hello_round">Hello Round World!</string>
   <string name="hello_square">Hello Square World!</string>
+  <string name="service_name">Service watch face</string>
 
 </resources>
