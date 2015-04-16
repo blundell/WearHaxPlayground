@@ -26,30 +26,37 @@ public class MainActivity extends ActionBarActivity {
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        Intent intent = new Intent(Intent.ACTION_VIEW);
-                        intent.setData(Uri.parse("geo:24,54?q=dubai"));
-                        PendingIntent pendingIntent = PendingIntent.getActivity(MainActivity.this, 123, intent, 0);
-
-                        RemoteInput remoteInput = new RemoteInput.Builder(KEY_REPLY)
-                                .setLabel("Voice reply?")
-                                .setChoices(getResources().getStringArray(R.array.reply))
-                                .build();
-
-                        NotificationCompat.Action action = new NotificationCompat.Action.Builder(R.mipmap.ic_launcher, "MAP", pendingIntent).build();
-
-                        NotificationCompat.Builder builder = new NotificationCompat.Builder(MainActivity.this);
-                        Notification notification = builder
-                                .setContentTitle("Hello Droidcon")
-                                .setContentText("TEST")
-                                .setSmallIcon(R.mipmap.ic_launcher)
-//                                .addAction(action)
-                                .extend(new NotificationCompat.WearableExtender().addAction(action))
-                                .build();
-                        NotificationManagerCompat notificationManger = NotificationManagerCompat.from(MainActivity.this);
-                        notificationManger.notify(0, notification);
+                        showNotification();
                     }
                 });
 
+    }
+
+    private void showNotification() {
+        Intent intent = new Intent(Intent.ACTION_VIEW);
+        intent.setData(Uri.parse("geo:24,54?q=dubai"));
+        PendingIntent pendingIntent = PendingIntent.getActivity(MainActivity.this, 123, intent, 0);
+
+        RemoteInput remoteInput = new RemoteInput.Builder(KEY_REPLY)
+                .setLabel("Voice reply?")
+                .setChoices(getResources().getStringArray(R.array.reply))
+                .build();
+        Intent replyIntent = new Intent(MainActivity.this, MainActivity.class);
+        PendingIntent pendingReplyIntent = PendingIntent.getActivity(MainActivity.this, 321, replyIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+
+
+        NotificationCompat.Action action = new NotificationCompat.Action.Builder(R.mipmap.ic_launcher, "MAP", pendingIntent).build();
+
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(MainActivity.this);
+        Notification notification = builder
+                .setContentTitle("Hello Droidcon")
+                .setContentText("TEST")
+                .setSmallIcon(R.mipmap.ic_launcher)
+//                                .addAction(action)
+                .extend(new NotificationCompat.WearableExtender().addAction(action))
+                .build();
+        NotificationManagerCompat notificationManger = NotificationManagerCompat.from(MainActivity.this);
+        notificationManger.notify(0, notification);
     }
 
     @Override
