@@ -26,16 +26,18 @@ public class MainActivity extends ActionBarActivity {
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        showNotification();
+                        Notification notification = buildNotification();
+                        show(notification);
                     }
                 });
 
     }
 
-    private void showNotification() {
+    private Notification buildNotification() {
         Intent mapIntent = new Intent(Intent.ACTION_VIEW);
         mapIntent.setData(Uri.parse("geo:24,54?q=dubai"));
         PendingIntent pendingMapIntent = PendingIntent.getActivity(MainActivity.this, 123, mapIntent, 0);
+        NotificationCompat.Action mapAction = new NotificationCompat.Action.Builder(R.mipmap.ic_launcher, "Map", pendingMapIntent).build();
 
         RemoteInput remoteInput = new RemoteInput.Builder(KEY_REPLY)
                 .setLabel("Voice reply?")
@@ -47,16 +49,17 @@ public class MainActivity extends ActionBarActivity {
                 .addRemoteInput(remoteInput)
                 .build();
 
-        NotificationCompat.Action mapAction = new NotificationCompat.Action.Builder(R.mipmap.ic_launcher, "Map", pendingMapIntent).build();
-
         NotificationCompat.Builder builder = new NotificationCompat.Builder(MainActivity.this);
-        Notification notification = builder
+        return builder
                 .setContentTitle("Hello Droidcon")
                 .setContentText("TEST")
                 .setSmallIcon(R.mipmap.ic_launcher)
 //                                .addAction(mapAction)
                 .extend(new NotificationCompat.WearableExtender().addAction(mapAction).addAction(replyAction))
                 .build();
+    }
+
+    private void show(Notification notification) {
         NotificationManagerCompat notificationManger = NotificationManagerCompat.from(MainActivity.this);
         notificationManger.notify(0, notification);
     }
