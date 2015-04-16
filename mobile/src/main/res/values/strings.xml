@@ -3,4 +3,10 @@
 
   <string name="hello_world">Hello world!</string>
   <string name="action_settings">Settings</string>
+
+  <string-array name="reply">
+    <item>Yes</item>
+    <item>No</item>
+    <item>Maybe</item>
+  </string-array>
 </resources>
