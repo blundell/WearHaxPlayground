@@ -43,7 +43,9 @@ public class MainActivity extends ActionBarActivity {
                 .build();
         Intent replyIntent = new Intent(MainActivity.this, MainActivity.class);
         PendingIntent pendingReplyIntent = PendingIntent.getActivity(MainActivity.this, 321, replyIntent, PendingIntent.FLAG_UPDATE_CURRENT);
-        NotificationCompat.Action replyAction = new NotificationCompat.Action.Builder(R.mipmap.ic_launcher, "Reply", pendingReplyIntent).build();
+        NotificationCompat.Action replyAction = new NotificationCompat.Action.Builder(R.mipmap.ic_launcher, "Reply", pendingReplyIntent)
+                .addRemoteInput(remoteInput)
+                .build();
 
         NotificationCompat.Action mapAction = new NotificationCompat.Action.Builder(R.mipmap.ic_launcher, "Map", pendingMapIntent).build();
 
